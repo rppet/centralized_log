@@ -27,20 +27,18 @@ class Log
      * @return bool
      * DateTime:2021/11/3 5:03 下午
      */
-    public function addLog($tableName, $userId = 0)
+    public function addLog($tableName, $data = [])
     {
-        $logData = [
-            'url' => $this->request->getPathInfo(),
-            'parameter' => json_encode($this->request->all()),
-            'way' => $this->request->getMethod(),
-            'user_id' => $userId,
-            'client_ip' => $this->request->getClientIp(),
-            'description' => $this->request->input('log_description') ?? '',
-            'request_time' => time(),
-            'create_time' => date('Y-m-d H:i:s')
-        ];
+        if (!$data){
+            return true;
+        }
 
-        return DB::table($tableName)->insert($logData);
+        $data['url'] = $data['url'] ?? $this->request->getMethod() . ':' . $this->request->getPathInfo();
+        $data['param'] = $data['param'] ?? json_encode($this->request->all());
+        $data['time'] = $data['time'] ?? time();
+        $data['client_ips'] = $data['client_ips'] ?? json_encode($this->request->getClientIps());
+
+        return DB::table($tableName)->insert($data);
     }
 
     /**
@@ -68,13 +66,13 @@ class Log
      * @return bool
      * DateTime:2021/11/3 5:07 下午
      */
-    public function createTable($sql = '', $table = '')
+    public function createTable($tableName = '')
     {
-        if ($this->checkTableIsExists($table)){
+        if ($this->checkTableIsExists($tableName)){
             return true;
         }
-        if ($sql){
-            return DB::statement($sql);
+        if ($tableName){
+            return LogModel::createTable($tableName);
         }
         return true;
     }
