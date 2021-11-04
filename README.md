@@ -12,7 +12,7 @@ Laravel Centralized access log
     
     // 如果分表不存在则新建表
     if (!$logServer->checkTableIsExists($subTablePrefix)){
-        $logServer->createTable($createSql, $tableName);
+        $logServer->createTable($tableName);
     }
     
     //添加日志记录
