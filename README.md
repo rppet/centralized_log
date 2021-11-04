@@ -16,7 +16,7 @@ Laravel Centralized access log
     }
     
     //添加日志记录
-    $logResult = $logServer->addLog($tableName, $userId);
+    $logResult = $logServer->addLog($tableName, $data);
     
 ## 发布配置文件
     php artisan vendor:publish --provider="Hanuas\CentralizedLog\ServiceProvider"
