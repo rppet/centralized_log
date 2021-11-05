@@ -1,7 +1,17 @@
 # centralized_log
 Laravel Centralized access log
 
+## 安装
+
+    "centralized_log": {
+      "type": "git",
+      "url": "https://github.com/hanuas/centralized_log.git"
+    }
+    
+    composer require hanuas/centralized_log:dev-master
+
 ## 示例代码
+
     $logServer = new Log();
     // 获取分表表名前缀
     $subTablePrefix = config('centralized_log.table_name');
@@ -19,4 +29,5 @@ Laravel Centralized access log
     $logResult = $logServer->addLog($tableName, $data);
     
 ## 发布配置文件
+    
     php artisan vendor:publish --provider="Hanuas\CentralizedLog\ServiceProvider"
